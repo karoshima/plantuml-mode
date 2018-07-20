@@ -1,37 +1,40 @@
 version: 2.0
 
-# Default actions to perform on each Emacs version
-default: &default-steps
-  steps:
-    - checkout
-    - run: apt-get update
-    - run: apt-get install -y openjdk-8-jre
-    - run: make
+references:
+  # Default actions to perform on each Emacs version
+  default: &default-steps
+    steps:
+      - checkout
+      - run: apk update
+      - run: apk upgrade
+      - run: apk add python3 make openjdk8
+      - run: make
+      - run: test/tools/download-jar.py
 
 # Enumerated list of Emacs versions
 jobs:
   test-emacs-24:
     docker:
-      - image: silex/emacs:24
-        entrypoint: bash
+      - image: silex/emacs:24.5-dev
+        entrypoint: sh
     <<: *default-steps
 
   test-emacs-25:
     docker:
-      - image: silex/emacs:25
-        entrypoint: bash
+      - image: silex/emacs:25.3-alpine-dev
+        entrypoint: sh
     <<: *default-steps
 
   test-emacs-26:
     docker:
-      - image: silex/emacs:26.0
-        entrypoint: bash
+      - image: silex/emacs:26.1-alpine-dev
+        entrypoint: sh
     <<: *default-steps
 
   test-emacs-master:
     docker:
-      - image: silex/emacs:master
-        entrypoint: bash
+      - image: silex/emacs:master-alpine-dev
+        entrypoint: sh
     <<: *default-steps
 
 # Executing in parallel
