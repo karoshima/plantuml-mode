@@ -8,8 +8,8 @@ references:
       - run: apk update
       - run: apk upgrade
       - run: apk add python3 make openjdk8 bash
-      - run: make
       - run: test/tools/download-jar.py
+      - run: make
 
 # Enumerated list of Emacs versions
 jobs:
@@ -36,7 +36,6 @@ workflows:
   version: 2
   ci-test-matrix:
     jobs:
-      - test-emacs-24
       - test-emacs-25
       - test-emacs-26
       - test-emacs-master
