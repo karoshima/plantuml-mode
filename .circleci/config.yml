@@ -13,6 +13,12 @@ references:
 
 # Enumerated list of Emacs versions
 jobs:
+  build:
+    docker:
+      - image: silex/emacs:25.3-alpine-dev
+        entrypoint: sh
+    <<: *default-steps
+
   test-emacs-25:
     docker:
       - image: silex/emacs:25.3-alpine-dev
